@@ -4,6 +4,10 @@
         // NOTE: currency pairs are reverse of what most exchanges use...
         //       For instance, instead of XPM_BTC, use BTC_XPM
 
+        //     [success] => 1
+    // [response] => 1NnPUGsWj6MuSVpTaLiUh7nsH84f5AszkX
+// )
+
         class poloniex
         {
             protected $api_key;
@@ -95,6 +99,16 @@
             public function return_currencies()
             {
                 return $this->retrieveJSON("$this->public_url?command=returnCurrencies");
+            }
+
+            public function generate_address($currency)
+            {
+              return $this->query(
+                              array(
+                                      'command' => 'generateNewAddress',
+                                      'currency' => strtoupper($currency)
+                              )
+                      );
             }
 
             public function get_open_orders($pair)
@@ -240,9 +254,8 @@
             }
         }
 
-$sec = "70a87da250f7ad2df470d7cec6fdc5b064b4ac355a278895de58601b02a06afea420e5f69c1873ac4f3351577b6442811a5507a94cd34a53a54af2ba927c9df1";
-$a_key = "GIXG6825-OEK0ZA5K-40YNXG93-XCBAR88Y";
+
 $test = new poloniex($a_key, $sec);
 echo "<pre>";
-print_r($test->return_currencies());
+print_r($test->get_trade_history("ETH_ZRX"));
 echo "/<pre>";
