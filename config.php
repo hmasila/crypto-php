@@ -7,7 +7,7 @@
 
 $host       = "localhost";
 $username   = "root";
-$password   = "root";
+$password   = "";
 $dbname     = "crypto";
 $dsn        = "mysql:host=$host;dbname=$dbname";
 $options    = array(
