@@ -1,0 +1,26 @@
+label {
+	display: block;
+	margin: 5px 0;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+td,
+th {
+	padding: 5px;
+	border-bottom: 1px solid #aaa;
+}
+
+#submit {
+ 	color: #fff;
+ 	font-size: 0;
+ 	width: 135px;
+ 	height: 60px;
+ 	border: none;
+ 	margin: 0;
+ 	padding: 0;
+ 	background: #0c0 url(image) 0 0 no-repeat;
+}
