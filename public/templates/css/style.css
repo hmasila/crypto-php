@@ -1,0 +1,37 @@
+label {
+	display: block;
+	margin: 5px 0;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+td {
+	padding: 10px;
+	border-bottom: 1px dashed #333;
+}
+
+button {
+    background-color: red; /* Green */
+    border: 1px solid;
+    padding: 5px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+		border-radius: 0px;
+}
+
+.center {
+	text-align: center;
+}
+
+.container {
+	margin: 5% 10% 5% 10%;
+	background-color: aliceblue;
+}
+
+.panel {
+	margin: 5% 10% 5% 10%;
+}

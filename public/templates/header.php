@@ -8,8 +8,9 @@
 
 	<title>Exchange Application</title>
 
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="public/templates/css/style.css">
 </head>
 
 <body>
-	<h1>Exchange Application for Kraken and Poloniex</h1>
+	<h1 class="center">Exchange Application for Kraken and Poloniex</h1>
+	<div class="container">
