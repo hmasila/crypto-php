@@ -103,7 +103,7 @@
 
             public function generate_address($currency)
             {
-              return $this->query(
+                return $this->query(
                               array(
                                       'command' => 'generateNewAddress',
                                       'currency' => strtoupper($currency)
@@ -253,9 +253,6 @@
                 return $tot_btc;
             }
         }
-
-
-$test = new poloniex($a_key, $sec);
-echo "<pre>";
-print_r($test->get_trade_history("ETH_ZRX"));
-echo "/<pre>";
+        $sec = "70a87da250f7ad2df470d7cec6fdc5b064b4ac355a278895de58601b02a06afea420e5f69c1873ac4f3351577b6442811a5507a94cd34a53a54af2ba927c9df1";
+        $a_key = "GIXG6825-OEK0ZA5K-40YNXG93-XCBAR88Y";
+        $poloniex_api = new poloniex($a_key, $sec);
