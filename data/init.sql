@@ -2,14 +2,9 @@ CREATE DATABASE crypto;
 
 use crypto;
 
-CREATE TABLE kraken_api_keys (
+CREATE TABLE api_keys (
 	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  exchange_platform VARCHAR(30) NOT NULL,
 	api_key VARCHAR(255) NOT NULL,
-	date TIMESTAMP
-);
-
-CREATE TABLE poloniex_api_keys (
-	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  api_key VARCHAR(255) NOT NULL,
 	date TIMESTAMP
 );
