@@ -19,7 +19,7 @@ $res = $coinigy_client->accounts();
                         ?>
 					<tr>
 						<td width=50%>
-							API Key: &nbsp &nbsp <input type="text" value="<?php echo escape($row); ?>" readonly>
+							API Key: &nbsp &nbsp <input type="text" value="<?php echo $row; ?>" size="30" readonly>
 						</td>
 					</tr>
 				<?php
@@ -40,7 +40,7 @@ $res = $coinigy_client->accounts();
                         ?>
 					<tr>
 						<td>
-							API Key: &nbsp &nbsp <input type="text" value="<?php echo escape($row); ?>" readonly>
+							API Key: &nbsp &nbsp <input type="text" value="<?php echo $row; ?>" size="30" readonly>
 						</td>
 					</tr>
 				<?php
@@ -49,4 +49,4 @@ $res = $coinigy_client->accounts();
 			</table>
 		</div>
 	</div>
-</div
+</div>

@@ -1,21 +1,29 @@
 <?php
 
-$array_kraken = array_unique(array_column($kraken_api->getTradingPairs(), "base"));
+$array_kraken = array();
 $array_poloniex = array();
-foreach ($poloniex_api->get_balances() as $key => $value) {
-	if($value > 0){
-		array_push($array_poloniex, $key);
-	}
+$auth_ids = $coinigy_client->auth_ids();
+$accounts = $coinigy_client->accounts();
+foreach ($accounts["Kraken"] as $key => $value) {
+  $array_kraken[$auth_ids[$value]] = $coinigy_client->balances($auth_ids[$value]);
+}
+
+foreach ($accounts["Poloniex"] as $key => $value) {
+  $array_poloniex[$auth_ids[$value]] = $coinigy_client->balances($auth_ids[$value]);
 }
 ?>
 
 <?php
 if (isset($_POST['submit'])) {
+  if ($_POST['exch_mkt'] == "Kraken"){
     $poloniex_api->withdraw($_POST['currency'], $_POST['amount'], $_POST['address']);
+  } else {
+    $poloniex_api->withdraw($_POST['currency'], $_POST['amount'], $_POST['address']);
+  }
 }
 ?>
 
-<div class="panel">
+<div style="margin: 5%; padding: 5px">
 	<table width=100%>
 		<thead>
 			<th width="50%">
@@ -27,38 +35,18 @@ if (isset($_POST['submit'])) {
 		</thead>
 		<tbody>
 			<tr>
-				<td width=50%>
-					<form method="post" action="">
-						<?php foreach ($array_kraken as $currency) {
-    ?>
-						<div class="row">
-							<div class="col-md-2">
-								<?php  echo $currency ?>
-								<input type="hidden" name="currency" id="currency" value=<?php $currency ?>>
-							</div>
-							<div class="col-md-5" style="margin-right: 2px;">
-								<input type="text" name="address" id="address" placeholder="Input Address" size="25">
-							</div>
-							<div class="col-md-2">
-								<input type="text" name="amount" id="amount" placeholder="Amount" size="10">
-							</div>
-							<div class="col-md-2">
-								<button type="submit" name="submit" class="submit-btn">Withdraw </button>
-							</div>
-						</div>
-					</form>
-				<?php
-} ?>
-				</td>
-				<td width=50%>
-					<?php if(sizeof($array_poloniex) > 0) { ?>
+        <td width=50%>
         <div class="row">
           <form method="post" action="">
-						<?php foreach ($array_poloniex as $currency) {
+						<?php foreach ($array_kraken as $key => $balance_array) {
+        ?>
+          <?php if(sizeof($balance_array) > 0) { ?>
+            <?php foreach ($balance_array as $balance) {
         ?>
           <div class="col-md-2">
-            <?php  echo $currency; ?>
-            <input type="hidden" name="currency" id="currency" value=<?php $currency ?>>
+            <?php  echo $balance["balance_curr_code"] ?>
+            <input type="hidden" name="exch_mkt" id="exch_mkt" value="Kraken">
+            <input type="hidden" name="currency" id="currency" value=<?php $balance["balance_curr_code"] ?>>
           </div>
           <div class="col-md-5" style="margin-right: 2px;">
             <input type="text" name="address" id="address" placeholder="Input Address" size="30">
@@ -71,13 +59,39 @@ if (isset($_POST['submit'])) {
           </div>
         </form>
           <?php
-      } ?>
-        </div>
-        <?php
-      } else {
+      } } else {
       	echo "You do not have any account with withdrawable balance";
-      }
-      ?>
+      }}?>
+        </div>
+				</td>
+				<td width=50%>
+        <div class="row">
+          <form method="post" action="">
+						<?php foreach ($array_poloniex as $balance_array) {
+        ?>
+          <?php if(sizeof($balance_array) > 0) { ?>
+            <?php foreach ($balance_array as $balance) {
+        ?>
+          <div class="col-md-2">
+            <?php  echo $balance["balance_curr_code"] ?>
+            <input type="hidden" name="exch_mkt" id="exch_mkt" value="Poloniex">
+            <input type="hidden" name="currency" id="currency" value=<?php $balance["balance_curr_code"] ?>>
+          </div>
+          <div class="col-md-5" style="margin-right: 2px;">
+            <input type="text" name="address" id="address" placeholder="Input Address" size="30">
+          </div>
+          <div class="col-md-2">
+            <input type="text" name="amount" id="amount" placeholder="Amount" size="10">
+          </div>
+          <div class="col-md-2">
+            <button type="submit" name="submit" class="submit-btn">Withdraw </button>
+          </div>
+        </form>
+          <?php
+      } } else {
+      	echo "You do not have any account with withdrawable balance";
+      }}?>
+        </div>
 				</td>
 			</tr>
 		</tbody>
