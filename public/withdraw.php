@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
 			<tr>
         <td width=50%>
         <div class="row">
-          <form method="post" action="">
+          <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 						<?php foreach ($array_kraken as $key => $balance_array) {
         ?>
           <?php if(sizeof($balance_array) > 0) { ?>
@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
 				</td>
 				<td width=50%>
         <div class="row">
-          <form method="post" action="">
+          <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 						<?php foreach ($array_poloniex as $balance_array) {
         ?>
           <?php if(sizeof($balance_array) > 0) { ?>
