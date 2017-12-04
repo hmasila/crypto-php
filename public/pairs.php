@@ -14,6 +14,7 @@ foreach ($kraken_api->getTradingPairs() as $key => $value) {
   <div class="col-md-6">
     <div class="col-md-3">
 	    <ul>
+        <h4> Bitcoin Pairs </h4>
 	      <?php
 	      foreach ($bth as $key) {
 	        echo "<li>" . $key . "</li>";
@@ -22,6 +23,7 @@ foreach ($kraken_api->getTradingPairs() as $key => $value) {
 	    </ul>
   	</div>
   	<div class="col-md-3">
+      <h4> Etherium Pairs </h4>
 	    <ul>
 	      <?php
 	      foreach ($eth as $key) {

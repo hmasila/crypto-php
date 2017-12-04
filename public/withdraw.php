@@ -1,6 +1,6 @@
 <?php
 
-$array1_kraken = array("BTC: 1", "LTC: 5", "DASH: 2", "ADA: 8" );
+$array_kraken = array_unique(array_column($kraken_api->getTradingPairs(), "base"));
 $array2_kraken = array();
 $array1_poloniex = array();
 $array2_poloniex = array();
@@ -26,7 +26,7 @@ if (isset($_POST['submit'])) {
 			<tr>
 				<td width=50%>
 					<form method="post" action="">
-						<?php foreach ($array1_kraken as $currency) {
+						<?php foreach ($array_kraken as $currency) {
     ?>
 						<div class="row">
 							<div class="col-md-2">
@@ -34,7 +34,7 @@ if (isset($_POST['submit'])) {
 								<input type="hidden" name="currency" id="currency" value=<?php $currency ?>>
 							</div>
 							<div class="col-md-5" style="margin-right: 2px;">
-								<input type="text" name="address" id="address" placeholder="Input Address" size="30">
+								<input type="text" name="address" id="address" placeholder="Input Address" size="25">
 							</div>
 							<div class="col-md-2">
 								<input type="text" name="amount" id="amount" placeholder="Amount" size="10">
@@ -48,10 +48,10 @@ if (isset($_POST['submit'])) {
 } ?>
 				</td>
 				<td width=50%>
-					<form method="post" action="">
-						<?php foreach ($array1_kraken as $currency) {
-        ?>
         <div class="row">
+          <form method="post" action="">
+						<?php foreach ($array_kraken as $currency) {
+        ?>
           <div class="col-md-2">
             <?php  echo $currency ?>
             <input type="hidden" name="currency" id="currency" value=<?php $currency ?>>
@@ -65,10 +65,10 @@ if (isset($_POST['submit'])) {
           <div class="col-md-2">
             <button type="submit" name="submit" class="submit-btn">Withdraw </button>
           </div>
+        </form>
+          <?php
+      } ?>
         </div>
-      </form>
-				<?php
-    } ?>
 				</td>
 			</tr>
 		</tbody>
