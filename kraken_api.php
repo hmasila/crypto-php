@@ -128,6 +128,7 @@ class KrakenAPI
             'API-Key: ' . $this->key,
             'API-Sign: ' . base64_encode($sign)
         );
+
         // make request
         curl_setopt($this->curl, CURLOPT_URL, $this->url . $path);
         curl_setopt($this->curl, CURLOPT_POSTFIELDS, $postdata);
@@ -152,13 +153,18 @@ class KrakenAPI
         return $res['result'];
     }
 
-    public function withdraw($asset, $address, $amount)
+    public function balance()
     {
-      $res = $this->QueryPrivate('Withdraw');
-      return $res['result'];
+      $res = $this->QueryPrivate('Balance');
+      return $res;
+    }
+
+    public function withdraw($asset, $amount, $address)
+    {
+      $array = array('asset' => $asset, 'key' => $address, 'amount' => $amount);
+      $res = $this->QueryPrivate('Withdraw', $array);
+      return $res;
     }
 }
 
-
 $kraken_api = new KrakenAPI($key, $secret);
-

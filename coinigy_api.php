@@ -13,8 +13,6 @@ $coinigy_api->markets('OK');
  *
  */
 
-
-
 class coinigy_api_client  {
 
     //private class vars set in constructor
@@ -32,27 +30,30 @@ class coinigy_api_client  {
         $this->endpoint = 'https://api.coinigy.com/api/v1/'; //with trailing slash
     }
 
+     public function accounts_info()
+    {
+        $post_arr = array();
 
-
-
+        return $this->query('accounts', $post_arr);
+    }
 
      public function accounts()
     {
-        $post_arr = array();
-        $res = $this->query('accounts', $post_arr);
+        $res = $this->accounts_info();
         $auth_key = array_column($res, 'auth_key');
         $exch_name = array_column($res, 'exch_name');
 
         return $this->array_combine_($exch_name, $auth_key);
     }
 
+     public function auth_ids()
+    {
+        $res = $this->accounts_info();
+        $auth_id = array_column($res, 'auth_id');
+        $exch_name = array_column($res, 'auth_key');
 
-
-
-
-
-
-
+        return array_combine($exch_name, $auth_id);
+    }
 
     public function activity()
     {
@@ -60,25 +61,13 @@ class coinigy_api_client  {
         return $this->query('activity', $post_arr);
     }
 
-
-
-
-
-
-
     public function balances($auth_ids)
     {
         $post_arr = array();
         $post_arr["auth_ids"] = $auth_ids;
-
+        $post_arr["show_nils"] = 0;
         return $this->query('balances', $post_arr);
     }
-
-
-
-
-
-
 
     public function pushNotifications()
     {
@@ -86,29 +75,11 @@ class coinigy_api_client  {
         return $this->query('pushNotifications', $post_arr);
     }
 
-
-
-
-
-
-
-
-
-
     public function user_orders()
     {
         $post_arr = array();
         return $this->query('orders', $post_arr);
     }
-
-
-
-
-
-
-
-
-
 
     public function alerts()
     {
@@ -117,14 +88,6 @@ class coinigy_api_client  {
 
     }
 
-
-
-
-
-
-
-
-
     public function exchanges()
     {
         $post_arr = array();
@@ -132,31 +95,15 @@ class coinigy_api_client  {
 
     }
 
-
-
-
-
-
-
-
-
-    public function markets($exchange_code)
+    public function markets()
     {
         $post_arr = array();
-        $post_arr["exchange_code"] = $exchange_code;
+        $post_arr["exchange_code"] = "KRKN";
 
-        return $this->query('markets', $post_arr);
+        $res = $this->query("markets", $post_arr);
+        return array_combine(array_column($res, 'mkt_id'), array_column($res, 'mkt_name'));
 
     }
-
-
-
-
-
-
-
-
-
 
     public function history($exchange_code, $exchange_market)
     {
@@ -170,11 +117,6 @@ class coinigy_api_client  {
 
     }
 
-
-
-
-
-
     public function asks($exchange_code, $exchange_market)
     {
         $post_arr = array();
@@ -185,13 +127,6 @@ class coinigy_api_client  {
         return $this->query('data', $post_arr);
 
     }
-
-
-
-
-
-
-
 
     public function bids($exchange_code, $exchange_market)
     {
@@ -204,17 +139,6 @@ class coinigy_api_client  {
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
     //asks + bids + history
     public function data($exchange_code, $exchange_market)
     {
@@ -226,19 +150,6 @@ class coinigy_api_client  {
         return $this->query('data', $post_arr);
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     //asks + bids
     public function orders($exchange_code, $exchange_market)
@@ -254,12 +165,6 @@ class coinigy_api_client  {
 
     }
 
-
-
-
-
-
-
     public function newsFeed()
     {
         $post_arr = array();
@@ -268,24 +173,12 @@ class coinigy_api_client  {
 
     }
 
-
-
-
-
-
     public function orderTypes()
     {
         $post_arr = array();
         return $this->query('orderTypes', $post_arr);
 
     }
-
-
-
-
-
-
-
 
     ////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////
@@ -294,13 +187,6 @@ class coinigy_api_client  {
     /////////////////////                       ////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-
-
 
     public function refreshBalance($auth_id)
     {
@@ -311,13 +197,6 @@ class coinigy_api_client  {
         return $this->query('refreshBalance', $post_arr);
 
     }
-
-
-
-
-
-
-
 
     public function addAlert($exchange_code, $exchange_market, $alert_price)
     {
@@ -330,15 +209,6 @@ class coinigy_api_client  {
 
     }
 
-
-
-
-
-
-
-
-
-
     public function deleteAlert($delete_alert_id)
     {
         $post_arr = array();
@@ -348,16 +218,8 @@ class coinigy_api_client  {
 
     }
 
-
-
-
-
-
-
-
-
-
-    public function addOrder($order_auth_id, $order_exch_id, $order_mkt_id, $order_type_id, $price_type_id, $limit_price, $stop_price, $order_quantity)
+    public function addOrder($order_auth_id, $order_mkt_id, $order_type_id, $order_quantity, $price_type_id = 3
+    , $limit_price = 755, $order_exch_id=62)
     {
         $post_arr = array();
         $post_arr["auth_id"] = $order_auth_id;
@@ -366,24 +228,12 @@ class coinigy_api_client  {
         $post_arr["order_type_id"] = $order_type_id;
         $post_arr["price_type_id"] = $price_type_id;
         $post_arr["limit_price"] =$limit_price;
-        $post_arr["stop_price"] = $stop_price;
         $post_arr["order_quantity"] = $order_quantity;
 
         return $this->query('addOrder', $post_arr);
 
 
     }
-
-
-
-
-
-
-
-
-
-
-
 
     public function cancelOrder($cancel_order_id)
     {
@@ -394,17 +244,6 @@ class coinigy_api_client  {
 
 
     }
-
-
-
-
-
-
-
-
-
-
-
 
     private function query($method, $post_arr)
     {
@@ -446,13 +285,6 @@ class coinigy_api_client  {
 
     }
 
-
-
-
-
-
-
-
     private function output_result($result)
     {
         if($result)
@@ -480,6 +312,5 @@ class coinigy_api_client  {
 
 
 }
-
 
 $coinigy_client = new coinigy_api_client($a_key, $a_sec);
