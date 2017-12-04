@@ -1,5 +1,3 @@
-<?php require_once "config.php";?>
-<?php require_once "common.php";?>
 <?php require "coinigy_api.php";?>
 <?php require "poloniex_api.php";?>
 <?php require_once "kraken_api.php";?>
