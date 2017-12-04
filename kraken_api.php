@@ -1,36 +1,35 @@
 <?php
 
-namespace Payward;
-/**
- * Reference implementation for Kraken's REST API.
- *
- * See https://www.kraken.com/help/api for more info.
- *
- *
- * The MIT License (MIT)
- *
- * Copyright (c) 2013 Payward, Inc
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
+// /**
+//  * Reference implementation for Kraken's REST API.
+//  *
+//  * See https://www.kraken.com/help/api for more info.
+//  *
+//  *
+//  * The MIT License (MIT)
+//  *
+//  * Copyright (c) 2013 Payward, Inc
+//  *
+//  * Permission is hereby granted, free of charge, to any person obtaining a copy
+//  * of this software and associated documentation files (the "Software"), to deal
+//  * in the Software without restriction, including without limitation the rights
+//  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  * copies of the Software, and to permit persons to whom the Software is
+//  * furnished to do so, subject to the following conditions:
+//  *
+//  * The above copyright notice and this permission notice shall be included in
+//  * all copies or substantial portions of the Software.
+//  *
+//  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+//  * THE SOFTWARE.
+//  */
 
-class KrakenAPIException extends \ErrorException {};
+class KrakenAPIException extends \ErrorException{};
 
 class KrakenAPI
 {
@@ -49,16 +48,18 @@ class KrakenAPI
      * @param string $version API version
      * @param bool $sslverify enable/disable SSL peer verification.  disable if using beta.api.kraken.com
      */
-    function __construct($key, $secret, $url='https://api.kraken.com', $version='0', $sslverify=true)
+    public function __construct($key, $secret)
     {
         $this->key = $key;
         $this->secret = $secret;
-        $this->url = $url;
-        $this->version = $version;
+        $this->url = 'https://api.kraken.com';
+        $this->version = 0;
         $this->curl = curl_init();
 
-        curl_setopt_array($this->curl, array(
-            CURLOPT_SSL_VERIFYPEER => $sslverify,
+        curl_setopt_array(
+            $this->curl,
+            array(
+            CURLOPT_SSL_VERIFYPEER => true,
             CURLOPT_SSL_VERIFYHOST => 2,
             CURLOPT_USERAGENT => 'Kraken PHP API Agent',
             CURLOPT_POST => true,
@@ -66,7 +67,7 @@ class KrakenAPI
         );
     }
 
-    function __destruct()
+    public function __destruct()
     {
         curl_close($this->curl);
     }
@@ -79,24 +80,24 @@ class KrakenAPI
      * @return array request result on success
      * @throws KrakenAPIException
      */
-    function QueryPublic($method, array $request = array())
+    private function QueryPublic($method, array $request = array())
     {
         // build the POST data string
         $postdata = http_build_query($request, '', '&');
-
         // make request
         curl_setopt($this->curl, CURLOPT_URL, $this->url . '/' . $this->version . '/public/' . $method);
         curl_setopt($this->curl, CURLOPT_POSTFIELDS, $postdata);
         curl_setopt($this->curl, CURLOPT_HTTPHEADER, array());
         $result = curl_exec($this->curl);
-        if($result===false)
+        if ($result===false) {
             throw new KrakenAPIException('CURL error: ' . curl_error($this->curl));
+        }
 
         // decode results
-        $result = json_decode($result, true);
-        if(!is_array($result))
+        return json_decode($result, true);
+        if (!is_array($result)) {
             throw new KrakenAPIException('JSON decode error');
-
+        }
         return $result;
     }
 
@@ -108,9 +109,9 @@ class KrakenAPI
      * @return array request result on success
      * @throws KrakenAPIException
      */
-    function QueryPrivate($method, array $request = array())
+    private function QueryPrivate($method, array $request = array())
     {
-        if(!isset($request['nonce'])) {
+        if (!isset($request['nonce'])) {
             // generate a 64 bit nonce using a timestamp at microsecond resolution
             // string functions are used to avoid problems on 32 bit systems
             $nonce = explode(' ', microtime());
@@ -127,20 +128,37 @@ class KrakenAPI
             'API-Key: ' . $this->key,
             'API-Sign: ' . base64_encode($sign)
         );
-
         // make request
         curl_setopt($this->curl, CURLOPT_URL, $this->url . $path);
         curl_setopt($this->curl, CURLOPT_POSTFIELDS, $postdata);
         curl_setopt($this->curl, CURLOPT_HTTPHEADER, $headers);
-        $result = curl_exec($this->curl);
-        if($result===false)
+        return curl_exec($this->curl);
+        if ($result===false) {
             throw new KrakenAPIException('CURL error: ' . curl_error($this->curl));
+        }
 
         // decode results
-        $result = json_decode($result, true);
-        if(!is_array($result))
+        return json_decode($result, true);
+        if (!is_array($result)) {
             throw new KrakenAPIException('JSON decode error');
+        }
 
         return $result;
     }
+
+    public function getTradingPairs()
+    {
+        $res = $this->QueryPublic('AssetPairs');
+        return $res['result'];
+    }
+
+    public function withdraw($asset, $address, $amount)
+    {
+      $res = $this->QueryPrivate('Withdraw');
+      return $res['result'];
+    }
 }
+
+
+$kraken_api = new KrakenAPI($key, $secret);
+

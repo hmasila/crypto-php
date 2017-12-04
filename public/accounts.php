@@ -3,32 +3,50 @@ $res = $coinigy_client->accounts();
 
 ?>
 
-<div class="container">
+<div style="margin: 5%; padding: 5px">
 	<h4>API keys</h4>
-		<table width=100%>
-			<thead>
-				<th width="50%">
-					Kraken API keys
-				</th>
-				<th width="50%">
-					Poloneix API keys
-				</th>
-			</thead>
-
-			<tbody>
-	<?php
-        foreach ($res["Kraken"] as $row) {
-            ?>
-			<tr>
-				<td width=50%>
-					Public: &nbsp &nbsp <input type="text" value="<?php echo escape($row); ?>">
-				</td>
-				<td width=50%>
-					Private: &nbsp &nbsp <input type="text" value="<?php echo escape($row); ?>">
-				</td>
-			</tr>
-		<?php
-        } ?>
-		</tbody>
-	</table>
+	<div class="row">
+		<div class="col-md-6">
+			<table width=100%>
+				<thead>
+					<th>
+						Kraken API keys
+					</th>
+				</thead>
+				<tbody>
+					<?php
+                    foreach ($res["Kraken"] as $row) {
+                        ?>
+					<tr>
+						<td width=50%>
+							API Key: &nbsp &nbsp <input type="text" value="<?php echo escape($row); ?>" readonly>
+						</td>
+					</tr>
+				<?php
+                    } ?>
+				</tbody>
+			</table>
+		</div>
+		<div class="col-md-6">
+			<table width=100%>
+				<thead>
+					<th>
+						Poloneix API keys
+					</th>
+				</thead>
+				<tbody>
+					<?php
+                    foreach ($res["Poloniex"] as $row) {
+                        ?>
+					<tr>
+						<td>
+							API Key: &nbsp &nbsp <input type="text" value="<?php echo escape($row); ?>" readonly>
+						</td>
+					</tr>
+				<?php
+                    } ?>
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div
