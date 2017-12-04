@@ -4,5 +4,6 @@
 <?php include "public/templates/header.php"; ?>
 <?php include "public/accounts.php"; ?>
 <?php require "public/withdraw.php"; ?>
+<?php require "public/trading.php"; ?>
 <?php require "public/pairs.php";?>
 <?php include "public/templates/footer.php"; ?>

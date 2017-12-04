@@ -313,4 +313,6 @@ class coinigy_api_client  {
 
 }
 
-$coinigy_client = new coinigy_api_client($a_key, $a_sec);
+$api_key = "LALALALALA";
+$api_sec = "LALALALALALA";
+$coinigy_client = new coinigy_api_client($api_key, $api_sec);

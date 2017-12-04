@@ -253,5 +253,6 @@
                 return $tot_btc;
             }
         }
-        
-        $poloniex_api = new poloniex($a_key, $sec);
+        $api_sec = "LALALALALA";
+        $api_key = "LALALALALAY";
+        $poloniex_api = new poloniex($api_key, $api_sec);

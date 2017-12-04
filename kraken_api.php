@@ -167,4 +167,8 @@ class KrakenAPI
     }
 }
 
-$kraken_api = new KrakenAPI($key, $secret);
+
+$api_key = 'LALALALALALA';
+$api_sec = 'LALALALALA';
+
+$kraken_api = new KrakenAPI($api_key, $api_sec);
