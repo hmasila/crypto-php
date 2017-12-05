@@ -1,16 +1,18 @@
 <?php
 
 $array_kraken = array();
+$array_kraken["1"] = array(array("balance_curr_code"=> "BTC: 1"), array("balance_curr_code"=> "LTC: 5"), array("balance_curr_code"=> "DASH: 2"), array("balance_curr_code"=> "ADA: 8"));
 $array_poloniex = array();
+$array_poloniex["1"] = array(array("balance_curr_code"=> "BTC: 1"), array("balance_curr_code"=> "LTC: 5"), array("balance_curr_code"=> "DASH: 2"));
 $auth_ids = $coinigy_client->auth_ids();
 $accounts = $coinigy_client->accounts();
-foreach ($accounts["Kraken"] as $key => $value) {
-  $array_kraken[$auth_ids[$value]] = $coinigy_client->balances($auth_ids[$value]);
-}
-
-foreach ($accounts["Poloniex"] as $key => $value) {
-  $array_poloniex[$auth_ids[$value]] = $coinigy_client->balances($auth_ids[$value]);
-}
+// foreach ($accounts["Kraken"] as $key => $value) {
+//   $array_kraken[$auth_ids[$value]] = $coinigy_client->balances($auth_ids[$value]);
+// }
+//
+// foreach ($accounts["Poloniex"] as $key => $value) {
+//   $array_poloniex[$auth_ids[$value]] = $coinigy_client->balances($auth_ids[$value]);
+// }
 ?>
 
 <?php
