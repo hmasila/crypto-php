@@ -5,7 +5,7 @@
 
 <?php
 if (isset($_POST['submit'])) {
-	$coinigy_client->addOrder($_POST['api_key'], $_POST['market_id'], $_POST['order_type_id'], $_POST['amount']);
+	$coinigy_client->addOrder($_POST['api_key'], $_POST['market_id'], $_POST['order_type_id'], $_POST['amount'], $_POST['price']);
 	}
 ?>
 <div class="row">
@@ -43,6 +43,14 @@ if (isset($_POST['submit'])) {
 				</div>
 				<div class="col-md-3">
 					<input type="text" name="amount" id="amount">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-3">
+					Price:
+				</div>
+				<div class="col-md-3">
+					<input type="text" name="price" id="price">
 				</div>
 			</div>
 				<button type = "submit" name="submit" class="submit-btn"> BUY </button>
@@ -84,6 +92,14 @@ if (isset($_POST['submit'])) {
 				</div>
 				<div class="col-md-3">
 					<input type="text" name="amount" id="amount">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-3">
+					Price:
+				</div>
+				<div class="col-md-3">
+					<input type="text" name="price" id="price">
 				</div>
 			</div>
 			<input type="hidden" name="order_type_id" value="2">

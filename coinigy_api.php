@@ -218,8 +218,8 @@ class coinigy_api_client  {
 
     }
 
-    public function addOrder($order_auth_id, $order_mkt_id, $order_type_id, $order_quantity, $price_type_id = 3
-    , $limit_price = 755, $order_exch_id=62)
+    public function addOrder($order_auth_id, $order_mkt_id, $order_type_id, $order_quantity, $limit_price, $price_type_id = 3
+    , $order_exch_id=62)
     {
         $post_arr = array();
         $post_arr["auth_id"] = $order_auth_id;
@@ -227,7 +227,7 @@ class coinigy_api_client  {
         $post_arr["mkt_id"] = $order_mkt_id;
         $post_arr["order_type_id"] = $order_type_id;
         $post_arr["price_type_id"] = $price_type_id;
-        $post_arr["limit_price"] =$limit_price;
+        $post_arr["limit_price"] = $limit_price;
         $post_arr["order_quantity"] = $order_quantity;
 
         return $this->query('addOrder', $post_arr);

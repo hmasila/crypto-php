@@ -11,7 +11,7 @@ foreach ($coinigy_client->markets() as $key => $value) {
 }
 ?>
 <div class="row pre-scrollable">
-  <div class="col-md-6">
+  <div class="col-md-6 col-md-offset-3">
   	<div class="col-md-3">
       <h4> Etherium Pairs </h4>
 	    <ul>
