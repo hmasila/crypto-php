@@ -38,15 +38,14 @@ if (isset($_POST['submit'])) {
 			</div>
 			<p></p>
 			<div class="row">
-				<div class="col-md-3">
+				<div class="col-md-2">
 					Amount:
 				</div>
 				<div class="col-md-3">
 					<input type="text" name="amount" id="amount">
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-3">
+				<div class="col-md-1"></div>
+				<div class="col-md-1">
 					Price:
 				</div>
 				<div class="col-md-3">
@@ -87,15 +86,14 @@ if (isset($_POST['submit'])) {
 			</div>
 			<p></p>
 			<div class="row">
-				<div class="col-md-3">
+				<div class="col-md-2">
 					Amount:
 				</div>
 				<div class="col-md-3">
 					<input type="text" name="amount" id="amount">
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-3">
+				<div class="col-md-1"></div>
+				<div class="col-md-1">
 					Price:
 				</div>
 				<div class="col-md-3">
