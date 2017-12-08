@@ -44,7 +44,7 @@ if (isset($_POST['submit'])) {
             <?php foreach ($balance_array as $balance) {
         ?>
           <div class="col-md-2">
-            <?php  echo $balance["balance_curr_code"] ?>
+            <?php  echo '.$balance["balance_curr_code"]. : .round($balance["btc_balance"]).' ?>
             <input type="hidden" name="exch_mkt" id="exch_mkt" value="Kraken">
             <input type="hidden" name="currency" id="currency" value=<?php $balance["balance_curr_code"] ?>>
           </div>
@@ -73,7 +73,7 @@ if (isset($_POST['submit'])) {
             <?php foreach ($balance_array as $balance) {
         ?>
           <div class="col-md-2">
-            <?php  echo $balance["balance_curr_code"] ?>
+            <?php  echo '.$balance["balance_curr_code"]. : .round($balance["btc_balance"]).' ?>
             <input type="hidden" name="exch_mkt" id="exch_mkt" value="Poloniex">
             <input type="hidden" name="currency" id="currency" value=<?php $balance["balance_curr_code"] ?>>
           </div>
