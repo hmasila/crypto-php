@@ -23,7 +23,7 @@ if (isset($_POST['submit'])) {
 }
 ?>
 
-<div style="margin: 5%; padding: 5px">
+<div style="margin-bottom: 5%; padding: 5px">
 	<table width=100%>
 		<thead>
 			<th width="50%">
@@ -44,15 +44,15 @@ if (isset($_POST['submit'])) {
             <?php foreach ($balance_array as $balance) {
         ?>
           <div class="col-md-2">
-            <?php  echo $balance["balance_curr_code"]. ": " .round($balance["btc_balance"]) ?>
+            <?php  echo $balance["balance_curr_code"]. ": ".round($balance["balance_amount_avail"]) ?>
             <input type="hidden" name="exch_mkt" id="exch_mkt" value="Kraken">
             <input type="hidden" name="currency" id="currency" value=<?php $balance["balance_curr_code"] ?>>
           </div>
-          <div class="col-md-5" style="margin-right: 2px;">
-            <input type="text" name="address" id="address" placeholder="Input Address" size="30">
+          <div class="col-md-4" style="margin-right: 1px;">
+            <input type="text" name="address" id="address" placeholder="Input Address">
           </div>
-          <div class="col-md-2">
-            <input type="text" name="amount" id="amount" placeholder="Amount" size="10">
+          <div class="col-md-2" style="margin-right: 1px;">
+            <input type="text" name="amount" id="amount" placeholder="Amount">
           </div>
           <div class="col-md-2">
             <button type="submit" name="submit" class="submit-btn">Withdraw </button>
@@ -73,15 +73,15 @@ if (isset($_POST['submit'])) {
             <?php foreach ($balance_array as $balance) {
         ?>
           <div class="col-md-2">
-            <?php  echo $balance["balance_curr_code"]. ": " .round($balance["btc_balance"]) ?>
-            <input type="hidden" name="exch_mkt" id="exch_mkt" value="Poloniex">
+            <?php  echo $balance["balance_curr_code"]. ": ".round($balance["balance_amount_avail"]) ?>
+            <input type="hidden" name="exch_mkt" id="exch_mkt" value="Kraken">
             <input type="hidden" name="currency" id="currency" value=<?php $balance["balance_curr_code"] ?>>
           </div>
-          <div class="col-md-5" style="margin-right: 2px;">
-            <input type="text" name="address" id="address" placeholder="Input Address" size="30">
+          <div class="col-md-4" style="margin-right: 1px;">
+            <input type="text" name="address" id="address" placeholder="Input Address">
           </div>
-          <div class="col-md-2">
-            <input type="text" name="amount" id="amount" placeholder="Amount" size="10">
+          <div class="col-md-2" style="margin-right: 1px;">
+            <input type="text" name="amount" id="amount" placeholder="Amount">
           </div>
           <div class="col-md-2">
             <button type="submit" name="submit" class="submit-btn">Withdraw </button>
